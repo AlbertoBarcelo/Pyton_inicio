@@ -77,4 +77,3 @@ while j < int(veces):
     elapse_3 = time_stop3 - time_start3
     print("Inserccion",elapse_3)
 
-# buscar forma para sumar todos los numeros de una lista grande
