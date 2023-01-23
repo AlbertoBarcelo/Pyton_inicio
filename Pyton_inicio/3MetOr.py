@@ -52,12 +52,14 @@ def insercion(array3):
 #
 j= 0
 while j < int(veces):
+    j = j + 1
+    print("Revision",j)
 # Burbuja
     time_start1 = datetime.now()
     burbuja(array1)
     time_stop1 = datetime.now()
     elapse_1 = time_stop1 - time_start1
-    print(elapse_1)
+    print("Burbuja",elapse_1)
 
 
     # Seleccion
@@ -65,7 +67,7 @@ while j < int(veces):
     seleccion(array2)
     time_stop2 = datetime.now()
     elapse_2 = time_stop2 - time_start2
-    print(elapse_2)
+    print("Seleccion",elapse_2)
 
 
     # Inserccion
@@ -73,6 +75,6 @@ while j < int(veces):
     insercion(array3)
     time_stop3 = datetime.now()
     elapse_3 = time_stop3 - time_start3
-    print(elapse_3)
+    print("Inserccion",elapse_3)
 
-    j = j + 1
+# buscar forma para sumar todos los numeros de una lista grande

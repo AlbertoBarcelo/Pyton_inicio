@@ -6,14 +6,19 @@ valor = 5
 
 resultados = []
 idx = 0
-idx1 = idx + 1
+
 time_start = datetime.now()
 for idx in range(0, len(lista)):
-    if not lista[idx] in diccionario:
-        diccionario[lista[idx]] = []
-        diccionario[lista[idx]].append(idx)
-    if lista[idx] + lista[idx1] is valor:
-        resultados = lista[idx] + lista[idx1]
+    complemento = valor - lista[idx]
+    if complemento in diccionario:
+        for idx1 in diccionario[complemento]:
+            if idx1 > idx:
+                resultados.append[
+                    strResultados(
+                        lista[idx], idx, complemento,idx1)]
+                num_resultados += 1
+                
+
 
 
 time_stop = datetime.now()
