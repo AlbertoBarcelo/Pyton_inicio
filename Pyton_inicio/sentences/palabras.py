@@ -1,87 +1,86 @@
-#https://tech-es.netlify.app/articles/es510798/index.html#
 import random
-
-def read_file(documento):
-    with open(documento) as frases:
-        frases = frases.readlines()
-        separadores = {ord(','): '', ord('.'): '', ord(';'): '', ord(':'): '', ord('-'): '',ord('?'): '',ord('!'): '',}
-        frases= frases.translate(separadores)
-        return frases
-
-
-# def clean_lines(file):
-#     separadores = {ord(','): '', ord('.'): '', ord(';'): '', ord(':'): '', ord('-'): '',ord('?'): '',ord('!'): '',}
-#     file= file.translate(separadores)
-#     return file
+def leer_archivo(ruta:str)-> object:
+    try: 
+        file  =  open(rf"{ruta}")
+    except:
+        print ("Hubo un error")
+    else:
+        return file
 
 
-def read_lines(f:object)-> None:
+def limpiar(linea:str) ->str:
+    separadores = {ord(','): '', ord(';'): '', ord(':'): '', ord('-'): '',ord('?'): '',ord('!'): '',}
+    file= str(linea).translate(separadores)
+    return file
+
+
+def añadir(estado:tuple,word:str,dict_words): # type: ignore 
+        if estado in dict_words:
+            dict_words[estado].append(word)
+        else:
+            dict_words[estado] = [word]
+        return dict_words
+
+
+def crear_dict(ruta: str)-> dict: # type: ignore 
+    file = leer_archivo(ruta)
     dict_words ={}
-    for i in f:
-        list_words:list[str]= f.rsplit()
-        for i,words in enumerate(list_words): 
-            if list_words[i] == words:
-                dict_words[words] = list_words[i - 1]
-            else:
-                dict_words[words] = list_words[:i]
-    return(dict_words)
+    for i in file :
+        oracion_limpia = limpiar(i)
+        list_words= oracion_limpia.rsplit()
+        for j , word in enumerate(list_words):
+            if j == 0:
+                dict_words = añadir(("START","START"),word,dict_words)
+                continue
+            if j ==1:
+                dict_words = añadir(("START",list_words[0]),word,dict_words)
+                continue
+            dict_words = añadir((list_words[j-2],list_words[j-1]),word,dict_words)
+    return (dict_words)
+
+# def frases(dict_words):
+#         words = list()
+#         estado = "START","START"
+#         while True:
+#             w = random.choice(dict_words[estado])
+#             words.append(w)
+#             estado = estado[1],w
+#             if w.endswith("."):
+#                 return " ".join(words)
+
+def update_state (state:tuple[str],word:str)->tuple:
+    state=state[1:]
+    state = state + (word,)
+    return state
 
 
-file = read_file('Pyton_inicio\sentences\hola.txt')
-clean = clean_lines(file)
-dict = read_lines(clean)
-print(dict)
+dic = crear_dict('Pyton_inicio\sentences\hola.txt')
+
+numero:int = int(input("¿Cuantas frases quieres?"))
+
+# frases = frases(dic,numero)
+# print(frases)
 
 
+frases_ok={}
+frase = list()
+i = 1
+state = "START","START"
+status = state
+while i < numero+1:
+    word = random.choice(dic[state])
+    frase.append(word)
+    status = update_state(status,word)
+    if not status in dic:
+            frase_complet=" ".join(frase)
+            if not frase_complet in frases_ok:
+                print(f"{i}- "+ frase_complet,'\n')
+                frases_ok[frase_complet]=i
+                frase.clear()
+                state= state
+                i += 1
+            else : 
+                frase.clear()
+                state = state
+                
 
-# def read_file(path:str) ->object:
-#     try:
-#         file= open(path)
-#     except:
-#         print("Hubo un problema!!")
-#     else:
-#         return file
-
-
-    
-
-# def make_pairs(words):
-#     for index in range(0, len(words)):
-#         yield (words[index], words[index -state])
-#         pair = make_pairs(words)
-#     word_dict = {}
-#     for word_1, word_2 in pair:
-#         if word_1 in word_dict.keys():
-#             word_dict[word_1].append(word_2)
-#         else:
-#             word_dict[word_1] = [word_2]
-#     return word_dict
-
-
-
-# print(List_pairs)
-
-# no se pueden acepatar frases que ya estn en el diccionario ni frases repetidas a la hora de generarlas
-
-# def crear_frase (chain, parts=2):
-#     create = createinicalstate(state_parts)
-#     word=""
-#     word_list=[]
-#     while true:
-#         word = random.choice(chain[state])
-#         if word == "stop":
-#             break
-
-    # word_list.append(word)
-
-# def select_lines(li:object):
-#     dict_words ={}
-#     for line in range(0, len(li)):
-#         j = li.rsplit()
-#         for i in range(0,len(j)):
-#             a = i-1
-#             if line == 0:
-#                 dict_words[line] = li[:a-1]
-#             else:
-#                 dict_words[line] = li[:a-1]
-#             return(dict_words)
