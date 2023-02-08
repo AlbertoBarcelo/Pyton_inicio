@@ -91,5 +91,5 @@ def gen_frases(dic: dict, F_Rep: dict, numero: int):
 
 numero: int = int(input("¿Cuantas frases quieres?: "))
 print()
-dic, F_rep = crear_dict('sentences\star_wars.txt')
+dic, F_rep = crear_dict('Pyton_inicio\sentences\star_wars.txt')
 gen_frases(dic, F_rep, numero)
