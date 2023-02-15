@@ -3,6 +3,11 @@
 import os
 import colorama
 # lo primero que hacemps es limpiar las consola
+
+# def validar( x, y ,array)
+# if x< len(array) and y<len(array[0]) and x >=0 and y>=0 and array[x][y] !=0:
+    # return True
+# return False
 def clear():
     if os.name == "nt":
         os.system("cls")
@@ -11,33 +16,68 @@ def clear():
 
 def laberinto():
     laberinto = [
-        ['e', '1', '1', '1', '1'],
-        ['0', '0', '0', '1', '1'],
-        ['0', '0', '0', '0', '1'],
-        ['1', '1', '0', '0', '0'],
-        ['1', '1', '0', '1', 's'],
+        ['e', '0', '0', '0', '0'],
+        ['1', '1', '1', '0', '0'],
+        ['0', '1', '1', '1', '1'],
+        ['0', '1', '1', '1', '1'],
+        ['0', '0', '0', '0', 's'],
     ]
     return laberinto
 
 def pintar(array):
+    colorama.init()
     for i in range(5):
         for j in range(5):
-            if [j] == '0':
-                print(colorama.Back.CYAN + str(array[j][i]))
-            if [j] == '1':
-                print(colorama.Back.RED + str(array[j][i]))
-            if [j] == 'e':
-                print(colorama.Back.YELLOW + str(array[j][i]))
-            if [j] == 's':
-                print(colorama.Back.YELLOW + str(array[j][i]))
+            if array[j][i] == '0':
+                print(colorama.Back.RED + str(array[j][i]), end=" ")
+            if array[j][i] == '1':
+                print(colorama.Back.CYAN + str(array[j][i]), end=" ")
+            if array[j][i] == 'e':
+                print(colorama.Back.YELLOW + str(array[j][i]), end=" ")
+            if array[j][i] == 's':
+                print(colorama.Back.YELLOW + str(array[j][i]), end=" ")
+        print()
+        colorama.Style.RESET_ALL
     return array
 
+def mover(array):
+    posiciones = {}
+    movimientos = []
+    i = 0
+    j = 0
+    posicion= 1
+    # casilla = (array[i][j])
+    # def movimientos (casilla,array,des)
+    #i,j = casilla
+    #if i < len (array) and  not (i+1,j) in des[casilla]:
+        #x+1 ,y
+        #return 
+    #...
+
+
+
+    for i in range(5):
+        for j in range(5):
+            if array[i][j] != "0" and not casilla in posiciones:
+                movimientos.append((i, j))
+                if j <len(array[0])-1 and  array[i][j +1] != "0" :
+                    casilla = array[i][j+1]
+                elif  i < len(array) -1  and i + 1 < 5 and  array[i+1][j] != "0":
+                    casilla = array[i+1][j]
+                elif j >=0 and  array[i][j-1] != "0":
+                    casilla = array[i][j-1]
+                elif i>=0 and array[i-1][j] != "0"  :
+                    casilla = array[i-1][j]
+            posiciones[posicion] = movimientos
+            posicion = posicion +1
+    return posiciones
 
 
 
 lab = laberinto()
 pintarlab =pintar(lab)
-print(pintarlab)
+movimientos =mover(lab)
+print(movimientos)
 
 
 
