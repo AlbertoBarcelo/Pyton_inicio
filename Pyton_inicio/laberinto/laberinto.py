@@ -1,13 +1,6 @@
-# resolver un laberinto 
-# hay que devolver dos listas en plan abajo derecha con las direcciones que has recorrido y luego con las coordenadas
 import os
 import colorama
-# lo primero que hacemps es limpiar las consola
 
-# def validar( x, y ,array)
-# if x< len(array) and y<len(array[0]) and x >=0 and y>=0 and array[x][y] !=0:
-    # return True
-# return False
 def clear():
     if os.name == "nt":
         os.system("cls")
@@ -40,38 +33,45 @@ def pintar(array):
         colorama.Style.RESET_ALL
     return array
 
+def validar(x, y, array):
+    if (x >= 0 and x < len(array)) and (y >= 0 and y < len(array[0])) and (array[x][y] != 0):
+        return True
+    return False
+
+def movements(casilla, array, des):
+    x, y = casilla
+    if x < len(array) and (x+1, y) not in des[casilla]:
+        if validar(x, y, array):
+            return (x+1, y)
+    if x < len(array) and (x-1, y) not in des[casilla]:
+        if validar(x, y, array):
+            return (x-1, y)
+    if x < len(array) and (x, y+1) not in des[casilla]:
+        if validar(x, y, array):
+            return (x, y+1)
+    if x < len(array) and (x, y-1) not in des[casilla]:
+        if validar(x, y, array):
+            return (x, y-1)
+
 def mover(array):
     posiciones = {}
-    movimientos = []
-    i = 0
-    j = 0
-    posicion= 1
-    # casilla = (array[i][j])
-    # def movimientos (casilla,array,des)
-    #i,j = casilla
-    #if i < len (array) and  not (i+1,j) in des[casilla]:
-        #x+1 ,y
-        #return 
-    #...
-
-
-
-    for i in range(5):
-        for j in range(5):
-            if array[i][j] != "0" and not casilla in posiciones:
-                movimientos.append((i, j))
-                if j <len(array[0])-1 and  array[i][j +1] != "0" :
-                    casilla = array[i][j+1]
-                elif  i < len(array) -1  and i + 1 < 5 and  array[i+1][j] != "0":
-                    casilla = array[i+1][j]
-                elif j >=0 and  array[i][j-1] != "0":
-                    casilla = array[i][j-1]
-                elif i>=0 and array[i-1][j] != "0"  :
-                    casilla = array[i-1][j]
-            posiciones[posicion] = movimientos
-            posicion = posicion +1
+    x= 0
+    y=0
+    for x in range(len(array)):
+        for y in range(len(array[x])):
+            casilla = (x, y)
+            me_muevo = movements(casilla, array, posiciones)
+            posiciones[(x, y)] = me_muevo
     return posiciones
 
+def buscar_inicio(array):
+    for x in range(len(array)):
+        for y in range(len(array[x])):
+            if array[x][y] == "e":
+                inicio = array[x][y]
+            y=y+1
+        x=x+1
+    return inicio
 
 
 lab = laberinto()
