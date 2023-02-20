@@ -93,3 +93,4 @@ numero: int = int(input("¿Cuantas frases quieres?: "))
 print()
 dic, F_rep = crear_dict('Programacion\Pyton_inicio-20230113T215612Z-001\Pyton_inicio\sentences\sentence_list_432.txt')
 gen_frases(dic, F_rep, numero)
+#hola
