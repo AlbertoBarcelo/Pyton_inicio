@@ -111,7 +111,7 @@ if __name__ == "__main__":
     y_entrada = int(input("y entrada: "))
     x_salida = int(input("x salida: "))
     y_salida = int(input("y salida: "))
-    obstaculos:list[tuple] = [(3,2),(1,2),(1,3),(1,4),(0,1),(3,2),(2,1),(3,3),(4,6),(6,2),(6,3),(8,5),(8,9),(6,4),(7,4)]
+    obstaculos:list[tuple] = [(3,2),(1,2),(1,3),(1,4),(0,1),(3,2),(2,1),(3,3),(4,6),(6,2),(6,3),(8,5),(8,8),(6,4),(9,4)]
     laberinto_generado = generar_laberinto(filas,columnas,obstaculos)
     pintar_laberinto_generado(laberinto_generado)
     camino,decisiones = mover(laberinto_generado,x_entrada,y_entrada,x_salida,y_salida)
